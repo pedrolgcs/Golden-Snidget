@@ -14,25 +14,39 @@ function createGame() {
   };
 
   function movePlayer(commad) {
-    console.log(`Moving ${commad.playerId} with ${commad.keyPressed}`);
+    const acceptedMoves = {
+      ArrowUp(player) {
+        console.log('Moving player Up');
+        if (player.y - 1 >= 0) {
+          player.y -= 1;
+        }
+      },
+      ArrowRight(player) {
+        console.log('Moving player Right');
+        if (player.x + 1 < screen.width) {
+          player.x += 1;
+        }
+      },
+      ArrowDown(player) {
+        console.log('Moving player Down');
+        if (player.y + 1 < screen.height) {
+          player.y += 1;
+        }
+      },
+      ArrowLeft(player) {
+        console.log('Moving player Left');
+        if (player.x - 1 >= 0) {
+          player.x -= 1;
+        }
+      },
+    };
 
     const { keyPressed } = commad;
     const player = state.players[commad.playerId];
+    const moveFunction = acceptedMoves[keyPressed];
 
-    if (keyPressed === 'ArrowUp' && player.y - 1 >= 0) {
-      player.y -= 1;
-    }
-
-    if (keyPressed === 'ArrowRight' && player.x + 1 < screen.width) {
-      player.x += 1;
-    }
-
-    if (keyPressed === 'ArrowDown' && player.y + 1 < screen.height) {
-      player.y += 1;
-    }
-
-    if (keyPressed === 'ArrowLeft' && player.x - 1 >= 0) {
-      player.x -= 1;
+    if (moveFunction) {
+      moveFunction(player);
     }
   }
 
@@ -71,7 +85,9 @@ function createKeyboardListener() {
   }
 
   function notifyAll(command) {
-    console.log(`Notifying ${state.observers.length} observers`);
+    console.log(
+      `KeyboardListener -> Notifying ${state.observers.length} observers`
+    );
 
     for (const observerFunction of state.observers) {
       observerFunction(command);
