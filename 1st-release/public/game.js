@@ -40,6 +40,20 @@ export default function createGame() {
     delete state.fruits[fruitId];
   }
 
+  function checkForFruitCollision(playerId) {
+    const player = state.players[playerId];
+
+    for (const fruitId in state.fruits) {
+      const fruit = state.fruits[fruitId];
+      console.log(`Checking ${playerId} and ${fruitId}`);
+
+      if (player.x === fruit.x && player.y === fruit.y) {
+        console.log(`Collision between ${playerId} and ${fruitId}`);
+        removeFruit({ fruitId });
+      }
+    }
+  }
+
   function movePlayer(command) {
     const acceptedMoves = {
       ArrowUp(player) {
@@ -64,20 +78,6 @@ export default function createGame() {
     if (player && moveFunction) {
       moveFunction(player);
       checkForFruitCollision(playerId);
-    }
-  }
-
-  function checkForFruitCollision(playerId) {
-    const player = state.players[playerId];
-
-    for (const fruitId in state.fruits) {
-      const fruit = state.fruits[fruitId];
-      console.log(`Checking ${playerId} and ${fruitId}`);
-
-      if (player.x === fruit.x && player.y === fruit.y) {
-        console.log(`Collision between ${playerId} and ${fruitId}`);
-        removeFruit({ fruitId });
-      }
     }
   }
 

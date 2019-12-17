@@ -17,5 +17,10 @@ game.addFruit({
   fruitX: Math.floor(Math.random() * 10),
   fruitY: Math.floor(Math.random() * 10),
 });
+game.addFruit({
+  fruitId: 'Pineplo',
+  fruitX: Math.floor(Math.random() * 10),
+  fruitY: Math.floor(Math.random() * 10),
+});
 
 renderScreen(screen, game, requestAnimationFrame);
